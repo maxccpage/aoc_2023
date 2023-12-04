@@ -1,6 +1,5 @@
 import { inputIterator } from "../shared/utils";
-
-type Color = "red" | "green" | "blue";
+import { Color, getLineSet } from "./shared";
 
 const MAX_INPUTS: { [key in Color]: number } = {
   blue: 14,
@@ -13,11 +12,6 @@ const getGameId = (line: string) => {
   const match = line.match(regex);
 
   return parseInt(match![1]);
-};
-
-const getLineSet = (line: string) => {
-  const line_set = line.split(":")[1].trim();
-  return line_set;
 };
 
 const isGamePossible = (line_set: string) => {
