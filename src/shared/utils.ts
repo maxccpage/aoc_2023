@@ -43,10 +43,10 @@ export const readFileContents = (filePath: string): string => {
 export const inputIterator = (raw: string, delimiter?: string) => {
   const input = raw.split(delimiter || "\n");
 
-  return (mapper: (line: string) => void) => {
-    input.forEach((line) => {
+  return (mapper: (line: string, index: number) => void) => {
+    input.forEach((line, index) => {
       if (line) {
-        mapper(line);
+        mapper(line, index);
       }
     });
   };
@@ -82,7 +82,6 @@ export const runAdventPuzzleSolution = async () => {
   }
 
   if (hasBulkInputsFile(day)) {
-    console.log("hit");
     const staticInput = readFileContents(`./src/day_${day}/bulk_input.txt`);
     solutionCode(staticInput);
     return;
