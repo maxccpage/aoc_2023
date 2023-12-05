@@ -1,6 +1,9 @@
 import { Day, Part, SolutionCode } from "./types";
 import SOLUTION_MAP from "./solution-map";
 import fs from "fs";
+import path from "path";
+
+const BASE_PATH = __dirname.split("/").slice(0, -2).join("/");
 
 const getAdventPuzzleInput = async (day: number): Promise<string> => {
   try {
@@ -49,6 +52,11 @@ export const inputIterator = (raw: string, delimiter?: string) => {
   };
 };
 
+const hasBulkInputsFile = (day: number) => {
+  const filePath = path.join(BASE_PATH, `src/day_${day}/instructions.txt`);
+  return fs.existsSync(filePath);
+};
+
 export const runAdventPuzzleSolution = async () => {
   const day = parseInt(process.argv[2]);
   const part = parseInt(process.argv[3]);
@@ -70,6 +78,13 @@ export const runAdventPuzzleSolution = async () => {
       `./src/day_${day}/test_input_${part}.txt`
     );
     solutionCode(testInput);
+    return;
+  }
+
+  if (hasBulkInputsFile(day)) {
+    console.log("hit");
+    const staticInput = readFileContents(`./src/day_${day}/bulk_input.txt`);
+    solutionCode(staticInput);
     return;
   }
 
